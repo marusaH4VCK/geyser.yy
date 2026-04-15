@@ -21,6 +21,7 @@ static UIImage *CheckmarkImage(CGFloat size, UIColor *color) {
     UIGraphicsEndImageContext();
     return img;
 }
+
 static UIView * __unused Separator(BOOL dark) {
     UIView *v = [[UIView alloc] initWithFrame:CGRectZero];
     v.backgroundColor = dark
@@ -28,7 +29,6 @@ static UIView * __unused Separator(BOOL dark) {
         : [UIColor colorWithWhite:0.0f alpha:0.07f];
     return v;
 }
-
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // MARK: - GMToggleRow
@@ -59,13 +59,11 @@ static UIView * __unused Separator(BOOL dark) {
     self.layer.cornerRadius = 16.0f;
     self.clipsToBounds = YES;
 
-    // Title
     _titleLabel = [[UILabel alloc] init];
     _titleLabel.font = [UIFont boldSystemFontOfSize:14.0f];
     _titleLabel.text = title;
     [self addSubview:_titleLabel];
 
-    // Subtitle
     if (subtitle.length) {
         _subtitleLabel = [[UILabel alloc] init];
         _subtitleLabel.font = [UIFont systemFontOfSize:11.0f];
@@ -75,7 +73,6 @@ static UIView * __unused Separator(BOOL dark) {
     }
 
     if (circle) {
-        // Pill toggle track
         _trackView = [[UIView alloc] init];
         _trackView.layer.cornerRadius = 13.0f;
         _trackView.clipsToBounds = YES;
@@ -91,7 +88,6 @@ static UIView * __unused Separator(BOOL dark) {
         _thumbView.layer.shadowOffset = CGSizeMake(0, 1);
         [_trackView addSubview:_thumbView];
     } else {
-        // Circle checkmark button
         _checkBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         _checkBtn.layer.cornerRadius = 15.0f;
         _checkBtn.clipsToBounds = YES;
@@ -138,9 +134,7 @@ static UIView * __unused Separator(BOOL dark) {
                 : (self->_dark
                     ? [UIColor colorWithWhite:0.40f alpha:1]
                     : [UIColor colorWithWhite:0.80f alpha:1]);
-            UIImage *img = self->_isOn
-                ? CheckmarkImage(30, [UIColor whiteColor])
-                : nil;
+            UIImage *img = self->_isOn ? CheckmarkImage(30, [UIColor whiteColor]) : nil;
             [self->_checkBtn setImage:img forState:UIControlStateNormal];
         }
     };
@@ -167,7 +161,6 @@ static UIView * __unused Separator(BOOL dark) {
     [super layoutSubviews];
     CGFloat W = self.bounds.size.width;
     CGFloat pad = 14.0f;
-
     CGFloat toggleW = _useCircleStyle ? 42.0f : 30.0f;
     CGFloat toggleH = _useCircleStyle ? 26.0f : 30.0f;
     CGFloat toggleX = W - pad - toggleW;
@@ -487,14 +480,11 @@ static NSMutableArray<UIView *> *BuildMSLTab(BOOL dark) {
 
 static NSMutableArray<UIView *> *BuildMISCTab(BOOL dark) {
     NSMutableArray *rows = [NSMutableArray array];
-
-    // Section label
     UILabel *secLabel = [[UILabel alloc] init];
     secLabel.text = @"Fullsbrend Menu";
     secLabel.font = [UIFont systemFontOfSize:12.0f];
     secLabel.textColor = dark ? GM_SUBTEXT_DARK : GM_SUBTEXT_LIGHT;
     [rows addObject:secLabel];
-
     [rows addObject:[[GMSliderRow alloc] initWithTitle:@"Width" min:480 max:2560 step:10 value:1080 isDark:dark]];
     [rows addObject:[[GMSliderRow alloc] initWithTitle:@"Height" min:480 max:2560 step:10 value:1920 isDark:dark]];
     [rows addObject:[[GMSliderRow alloc] initWithTitle:@"Refresh Rate (FPS)" min:30 max:240 step:10 value:120 isDark:dark]];
@@ -532,19 +522,16 @@ static NSMutableArray<UIView *> *BuildUITab(BOOL dark) {
     _downloaded = dl; _dark = dark;
     self.layer.cornerRadius = 16.0f;
     self.backgroundColor = dark ? [UIColor colorWithWhite:0.33f alpha:1] : [UIColor colorWithWhite:0.94f alpha:1];
-
     _nameLabel = [[UILabel alloc] init];
     _nameLabel.font = [UIFont boldSystemFontOfSize:14.0f];
     _nameLabel.text = name;
     _nameLabel.textColor = dark ? GM_TEXT_DARK : GM_TEXT_LIGHT;
     [self addSubview:_nameLabel];
-
     _authorLabel = [[UILabel alloc] init];
     _authorLabel.font = [UIFont systemFontOfSize:11.0f];
     _authorLabel.text = author;
     _authorLabel.textColor = dark ? GM_SUBTEXT_DARK : [UIColor colorWithWhite:0.47f alpha:1];
     [self addSubview:_authorLabel];
-
     if (dl) {
         _deleteBtn = [UIButton buttonWithType:UIButtonTypeSystem];
         [_deleteBtn setTitle:@"Delete" forState:UIControlStateNormal];
@@ -552,7 +539,6 @@ static NSMutableArray<UIView *> *BuildUITab(BOOL dark) {
         _deleteBtn.backgroundColor = [UIColor colorWithRed:1.0f green:0.70f blue:0.70f alpha:1];
         _deleteBtn.layer.cornerRadius = 10.0f;
         [self addSubview:_deleteBtn];
-
         _applyBtn = [UIButton buttonWithType:UIButtonTypeSystem];
         [_applyBtn setTitle:@"Apply" forState:UIControlStateNormal];
         [_applyBtn setTitleColor:(dark ? GM_TEXT_DARK : GM_TEXT_LIGHT) forState:UIControlStateNormal];
@@ -587,13 +573,11 @@ static NSMutableArray<UIView *> *BuildUITab(BOOL dark) {
 
 static NSMutableArray<UIView *> *BuildSettingsTab(BOOL dark) {
     NSMutableArray *rows = [NSMutableArray array];
-
     UILabel *secLabel = [[UILabel alloc] init];
     secLabel.text = @"Settings from Server";
     secLabel.font = [UIFont systemFontOfSize:12.0f];
     secLabel.textColor = dark ? GM_SUBTEXT_DARK : GM_SUBTEXT_LIGHT;
     [rows addObject:secLabel];
-
     [rows addObject:[[GMSettingsCard alloc] initWithName:@"Brutal S..." author:@"Beady" downloaded:YES isDark:dark]];
     [rows addObject:[[GMSettingsCard alloc] initWithName:@"Medium Settings" author:@"FLY , downicaded" downloaded:NO isDark:dark]];
     [rows addObject:[[GMSettingsCard alloc] initWithName:@"Safe Settings" author:@"Not downicaded" downloaded:NO isDark:dark]];
@@ -633,12 +617,25 @@ static GMMenuViewController *_sharedController;
     self.view.backgroundColor = [UIColor clearColor];
     _activeTab = GMTabESP;
     [self _buildLayout];
+    
+    // ✅ เพิ่ม observer สำหรับปุ่มลอย
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(toggleMenu) name:@"ToggleMenuNotification" object:nil];
+}
+
+- (void)toggleMenu {
+    if (self.view.superview) {
+        [self dismiss];
+    } else {
+        [self show];
+    }
+}
+
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)_buildLayout {
     BOOL dark = _isDark;
-
-    // Container
     _container = [[UIView alloc] initWithFrame:CGRectMake(30, 100, 370, 480)];
     _container.layer.cornerRadius = 20.0f;
     _container.clipsToBounds = NO;
@@ -648,12 +645,9 @@ static GMMenuViewController *_sharedController;
     _container.layer.shadowOffset = CGSizeMake(0, 6);
     [self.view addSubview:_container];
 
-    // Drag gesture
-    UIPanGestureRecognizer *drag = [[UIPanGestureRecognizer alloc]
-        initWithTarget:self action:@selector(_dragged:)];
+    UIPanGestureRecognizer *drag = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(_dragged:)];
     [_container addGestureRecognizer:drag];
 
-    // Inner clip view
     UIView *clip = [[UIView alloc] initWithFrame:_container.bounds];
     clip.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     clip.layer.cornerRadius = 20.0f;
@@ -661,13 +655,11 @@ static GMMenuViewController *_sharedController;
     clip.backgroundColor = dark ? GM_BG_DARK : GM_BG_LIGHT;
     [_container addSubview:clip];
 
-    // Sidebar
     _sidebar = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 64, _container.bounds.size.height)];
     _sidebar.backgroundColor = dark ? GM_SIDEBAR_DARK : GM_SIDEBAR_LIGHT;
     _sidebar.autoresizingMask = UIViewAutoresizingFlexibleHeight;
     [clip addSubview:_sidebar];
 
-    // Sidebar buttons
     NSArray *icons = @[@"eye", @"scope", @"gamecontroller", @"wrench.and.screwdriver", @"square.grid.2x2", @"gear"];
     NSMutableArray *btns = [NSMutableArray array];
     for (NSInteger i = 0; i < (NSInteger)icons.count; i++) {
@@ -675,9 +667,7 @@ static GMMenuViewController *_sharedController;
         UIImage *img = [UIImage systemImageNamed:icons[i]];
         [btn setImage:img forState:UIControlStateNormal];
         btn.tintColor = (i == _activeTab) ? (dark ? GM_TEXT_DARK : GM_TEXT_LIGHT) : [UIColor colorWithWhite:0.50f alpha:1];
-        btn.backgroundColor = (i == _activeTab)
-            ? [UIColor colorWithWhite:dark ? 0.38f : 0.60f alpha:1]
-            : [UIColor clearColor];
+        btn.backgroundColor = (i == _activeTab) ? [UIColor colorWithWhite:dark ? 0.38f : 0.60f alpha:1] : [UIColor clearColor];
         btn.layer.cornerRadius = 22.0f;
         btn.frame = CGRectMake(10, 16 + i * 62, 44, 44);
         btn.tag = i;
@@ -687,16 +677,13 @@ static GMMenuViewController *_sharedController;
     }
     _tabButtons = [btns copy];
 
-    // Right panel
     UIView *rightPanel = [[UIView alloc] initWithFrame:CGRectMake(64, 0, _container.bounds.size.width - 64, _container.bounds.size.height)];
     rightPanel.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     rightPanel.backgroundColor = [UIColor clearColor];
     [clip addSubview:rightPanel];
 
-    // Header
     [self _buildHeaderIn:rightPanel];
 
-    // Scroll
     _scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 58, rightPanel.bounds.size.width, rightPanel.bounds.size.height - 58)];
     _scrollView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     _scrollView.showsVerticalScrollIndicator = NO;
@@ -708,8 +695,6 @@ static GMMenuViewController *_sharedController;
 - (void)_buildHeaderIn:(UIView *)parent {
     BOOL dark = _isDark;
     CGFloat W = parent.bounds.size.width;
-
-    // Title pill
     _headerPill = [[UIView alloc] initWithFrame:CGRectMake(8, 8, W - 8 - 3*(36+6), 42)];
     _headerPill.backgroundColor = dark ? GM_PILL_DARK : GM_PILL_LIGHT;
     _headerPill.layer.cornerRadius = 21.0f;
@@ -759,12 +744,8 @@ static GMMenuViewController *_sharedController;
     BOOL dark = _isDark;
     for (UIButton *btn in _tabButtons) {
         BOOL active = btn.tag == (NSInteger)_activeTab;
-        btn.backgroundColor = active
-            ? [UIColor colorWithWhite:dark ? 0.38f : 0.60f alpha:1]
-            : [UIColor clearColor];
-        btn.tintColor = active
-            ? (dark ? GM_TEXT_DARK : GM_TEXT_LIGHT)
-            : [UIColor colorWithWhite:0.50f alpha:1];
+        btn.backgroundColor = active ? [UIColor colorWithWhite:dark ? 0.38f : 0.60f alpha:1] : [UIColor clearColor];
+        btn.tintColor = active ? (dark ? GM_TEXT_DARK : GM_TEXT_LIGHT) : [UIColor colorWithWhite:0.50f alpha:1];
     }
 }
 
@@ -773,11 +754,11 @@ static GMMenuViewController *_sharedController;
 
     NSMutableArray<UIView *> *rows;
     switch (_activeTab) {
-        case GMTabESP:      rows = BuildESPTab(_isDark);      break;
-        case GMTabAimbot:   rows = BuildAimbotTab(_isDark);   break;
-        case GMTabMSL:      rows = BuildMSLTab(_isDark);      break;
-        case GMTabMISC:     rows = BuildMISCTab(_isDark);     break;
-        case GMTabUI:       rows = BuildUITab(_isDark);       break;
+        case GMTabESP: rows = BuildESPTab(_isDark); break;
+        case GMTabAimbot: rows = BuildAimbotTab(_isDark); break;
+        case GMTabMSL: rows = BuildMSLTab(_isDark); break;
+        case GMTabMISC: rows = BuildMISCTab(_isDark); break;
+        case GMTabUI: rows = BuildUITab(_isDark); break;
         case GMTabSettings: rows = BuildSettingsTab(_isDark); break;
     }
 
@@ -787,8 +768,6 @@ static GMMenuViewController *_sharedController;
     for (UIView *row in rows) {
         CGSize sz = [row intrinsicContentSize];
         CGFloat h = (sz.height > 0) ? sz.height : 20.0f;
-
-        // Labels (section headers) have no corner radius and a different style
         if ([row isKindOfClass:[UILabel class]]) {
             row.frame = CGRectMake(pad, y, W - pad * 2, h);
             y += h + 2.0f;
@@ -815,17 +794,12 @@ static GMMenuViewController *_sharedController;
 }
 
 - (void)_saveTapped {}
-
 - (void)_brightnessTapped {
     _isDark = !_isDark;
-    // Rebuild UI
     for (UIView *v in self.view.subviews) [v removeFromSuperview];
     [self _buildLayout];
 }
-
-- (void)_closeTapped {
-    [self dismiss];
-}
+- (void)_closeTapped { [self dismiss]; }
 
 - (void)show {
     if (self.view.superview) return;
@@ -847,9 +821,7 @@ static GMMenuViewController *_sharedController;
 }
 
 - (void)dismiss {
-    [UIView animateWithDuration:0.20 animations:^{
-        self.view.alpha = 0;
-    } completion:^(BOOL done) {
+    [UIView animateWithDuration:0.20 animations:^{ self.view.alpha = 0; } completion:^(BOOL done) {
         (void)done;
         [self.view removeFromSuperview];
     }];
@@ -887,7 +859,6 @@ static GMMenuWindow *_sharedWindow;
     });
 }
 
-// Hit-test: pass touches through transparent areas
 - (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event {
     UIView *hit = [super hitTest:point withEvent:event];
     if (hit == self || hit == self.rootViewController.view) return nil;
