@@ -126,7 +126,7 @@ static UIView *Separator(BOOL dark) {
                     ? [UIColor colorWithWhite:0.42f alpha:1]
                     : [UIColor colorWithWhite:0.80f alpha:1];
             }
-            CGFloat tw = 42.0f, th = 26.0f, tPad = 3.0f, tSize = 20.0f;
+            CGFloat tw = 42.0f, tPad = 3.0f, tSize = 20.0f;
             CGFloat tx = self->_isOn ? (tw - tPad - tSize) : tPad;
             self->_thumbView.frame = CGRectMake(tx, tPad, tSize, tSize);
             self->_thumbView.backgroundColor = self->_dark
@@ -418,7 +418,7 @@ static UIView *Separator(BOOL dark) {
 
 - (void)layoutSubviews {
     [super layoutSubviews];
-    CGFloat W = self.bounds.size.Width;
+    CGFloat W = self.bounds.size.width;
     CGFloat pad = 2.0f;
     CGFloat labelH = _label ? 18.0f : 0.0f;
     if (_label) _label.frame = CGRectMake(4, 0, W, labelH);
@@ -829,7 +829,17 @@ static GMMenuViewController *_sharedController;
 
 - (void)show {
     if (self.view.superview) return;
-    UIWindow *w = [UIApplication sharedApplication].keyWindow;
+    UIWindow *w = nil;
+    if (@available(iOS 13.0, *)) {
+        for (UIScene *scene in [UIApplication sharedApplication].connectedScenes) {
+            if (scene.activationState == UISceneActivationStateForegroundActive &&
+                [scene isKindOfClass:[UIWindowScene class]]) {
+                w = [(UIWindowScene *)scene windows].firstObject;
+                break;
+            }
+        }
+    }
+    if (!w) w = [UIApplication sharedApplication].keyWindow;
     [w addSubview:self.view];
     self.view.frame = w.bounds;
     self.view.alpha = 0;
@@ -840,6 +850,7 @@ static GMMenuViewController *_sharedController;
     [UIView animateWithDuration:0.20 animations:^{
         self.view.alpha = 0;
     } completion:^(BOOL done) {
+        (void)done;
         [self.view removeFromSuperview];
     }];
 }
