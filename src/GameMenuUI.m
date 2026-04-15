@@ -28,7 +28,7 @@ static UIView * __unused Separator(BOOL dark) {
         : [UIColor colorWithWhite:0.0f alpha:0.07f];
     return v;
 }
-}
+
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // MARK: - GMToggleRow
