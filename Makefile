@@ -15,7 +15,7 @@
 #         -dynamiclib -o GameMenuUI.dylib src/GameMenuUI.m
 # ──────────────────────────────────────────────────────────────────────────────
 
-TARGET  := iphone:clang:latest:14.0
+TARGET := iphone:clang:latest:14.0
 INSTALL_TARGET_PROCESSES := SpringBoard
 
 include $(THEOS)/makefiles/common.mk
@@ -24,7 +24,7 @@ include $(THEOS)/makefiles/common.mk
 LIBRARY_NAME := GameMenuUI
 
 GameMenuUI_FILES    := src/GameMenuUI.m
-GameMenuUI_CFLAGS   := -fobjc-arc -Wall -Wextra -O2
+GameMenuUI_CFLAGS   := -fobjc-arc -Wall -Wextra -O2 -Wno-deprecated-declarations
 GameMenuUI_LDFLAGS  := -framework UIKit -framework Foundation -framework QuartzCore
 
 include $(THEOS_MAKE_PATH)/library.mk
