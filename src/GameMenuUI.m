@@ -21,13 +21,13 @@ static UIImage *CheckmarkImage(CGFloat size, UIColor *color) {
     UIGraphicsEndImageContext();
     return img;
 }
-
-static UIView *Separator(BOOL dark) {
+static UIView * __unused Separator(BOOL dark) {
     UIView *v = [[UIView alloc] initWithFrame:CGRectZero];
     v.backgroundColor = dark
         ? [UIColor colorWithWhite:1.0f alpha:0.07f]
         : [UIColor colorWithWhite:0.0f alpha:0.07f];
     return v;
+}
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
